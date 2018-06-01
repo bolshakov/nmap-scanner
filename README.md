@@ -12,7 +12,7 @@ Command accept two arguments -- server address and whitelisted ports in the foll
 * `22/tcp,80/tcp,53/udp`
 * etc
 
-Two configure notification options the number of environment variables available. Docker compose example:
+To configure notification options the number of environment variables available. Docker compose example:
 
 ```yml
 version: '3'
