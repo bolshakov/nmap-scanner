@@ -8,6 +8,6 @@ RUN \
   confd@testing
 
 ADD files/etc/confd /etc/confd
-ADD files/usr/local/bin/scan_server.rb /usr/local/bin/scan_server.rb
+ADD files/usr/local/bin/docker_entrypoint.rb /usr/local/bin/docker_entrypoint.rb
 
-ENTRYPOINT ["/usr/local/bin/scan_server.rb"]
+ENTRYPOINT ["/usr/local/bin/docker_entrypoint.rb"]
