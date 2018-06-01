@@ -2,7 +2,7 @@
 require 'open3'
 
 DEFAULT_SCAN_INTERVAL = 60*60
-DEFAULT_PORT_RANGE = 1-100 # 1-65535
+DEFAULT_PORT_RANGE = '1-65535'
 
 scan_interval = ENV.fetch('SCAN_INTERVAL') do
   puts "Scan interval set to #{DEFAULT_SCAN_INTERVAL} seconds."
