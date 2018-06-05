@@ -23,12 +23,12 @@ services:
     restart: always
     command: myserver.example.com 22/tcp,80/tcp
     environment:
-      - SCAN_INTERVAL=3600 # in seconds
-      - SCAN_PORT_RANGE=1-65535
-      - EMAIL_SMTP_HOST=smtp.example.com
-      - EMAIL_SMTP_PORT=587
+      - SCAN_INTERVAL=3600 # in seconds (default 3600)
+      - SCAN_PORTS=1-100 # or just single oport, e.g 22 (default 1-65535)
+      - SMTP_USERNAME=nmap-scanner
+      - SMTP_PASSWORD=secret123
+      - SMTP_HOST=smtp.example.com
+      - SMTP_PORT=587
       - EMAIL_FROM=nmap-scanner@example.com
-      - EMAIL_USERNAME=nmap-scanner
-      - EMAIL_PASSWORD=secret123
-      - NOTIFY_TO_EMAIL=warnings@example.com      
+      - EMAIL_TO=warnings@example.com
 ``` 
