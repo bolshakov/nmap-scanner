@@ -9,14 +9,8 @@ DEFAULT_SCAN_INTERVAL = 60*60
 DEFAULT_PORT_RANGE = '1-65535'
 
 Settings = OpenStruct.new(
-  scan_interval: ENV.fetch('SCAN_INTERVAL') {
-    puts "Scan interval set to #{DEFAULT_SCAN_INTERVAL} seconds."
-    DEFAULT_SCAN_INTERVAL
-  }.to_i,
-  scan_ports: ENV.fetch('SCAN_PORTS') {
-    puts "Scan port range set to #{DEFAULT_PORT_RANGE}."
-    DEFAULT_PORT_RANGE
-  },
+  scan_interval: ENV.fetch('SCAN_INTERVAL', DEFAULT_SCAN_INTERVAL).to_i,
+  scan_ports: ENV.fetch('SCAN_PORTS', DEFAULT_PORT_RANGE),
   smtp_host: ENV.fetch('SMTP_HOST') { raise 'EMAIL_SMTP_HOST environment variable missing' },
   smtp_port: Integer(ENV.fetch('SMTP_PORT') { raise 'EMAIL_SMTP_PORT environment variable missing' }),
   smtp_username: ENV.fetch('SMTP_USERNAME') { raise 'EMAIL_USERNAME environment variable missing' },
