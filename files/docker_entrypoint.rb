@@ -54,9 +54,9 @@ class NmapScanner
     loop do
       Timeout.timeout(settings.scan_interval) { scan_and_notify }
     rescue Timeout::Error
-      log(:error, "[#{settings.server_address}] Scanning took more then #{settings.scan_interval} seconds. Terminating... ")
+      log(:error, "Scanning took more then #{settings.scan_interval} seconds. Terminating... ")
     rescue => error
-      log(:error, "[#{settings.server_address}] Unexpected error happened: #{error.inspect}")
+      log(:error, "Unexpected error happened: #{error.inspect}")
       retry
     ensure
       log(:info, "")
@@ -69,16 +69,16 @@ class NmapScanner
     extra_ports = open_ports - settings.whitelisted_ports
 
     if extra_ports.empty?
-      log(:info, "[#{settings.server_address}] no forbidden ports found.")
+      log(:info, "No forbidden ports found.")
     else
-      log(:info, "[#{settings.server_address}] forbidden ports found #{extra_ports.join(', ')}")
+      log(:info, "Forbidden ports found #{extra_ports.join(', ')}")
       notify_by_email(open_ports, extra_ports)
     end
   end
 
   private def find_open_ports
     nmap_command = "nmap -p #{settings.scan_ports} #{settings.server_address}"
-    log(:debug, "[#{settings.server_address}] running nmap: #{nmap_command}")
+    log(:debug, "Running nmap: #{nmap_command}")
     scan_result = `#{nmap_command}`.split("\n")
 
     scan_result
@@ -95,7 +95,7 @@ class NmapScanner
       smtp.send_message(message_string, settings.email_from, settings.email_to)
     end
 
-    log(:debug, "[#{settings.server_address}] Notification message sent, success=#{result.success?}")
+    log(:debug, "Notification message sent, success=#{result.success?}")
   end
 
   private def mail_message_string(open_ports, extra_ports)
