@@ -6,11 +6,11 @@ require 'logger'
 require 'timeout'
 
 DEFAULT_SCAN_INTERVAL = 60*60
-DEFAULT_PORT_RANGE = '1-65535'
+DEFAULT_NMAP_OPTIONS = '-F'
 
 Settings = OpenStruct.new(
+  nmap_options: ENV.fetch('NMAP_OPTIONS', DEFAULT_NMAP_OPTIONS),
   scan_interval: ENV.fetch('SCAN_INTERVAL', DEFAULT_SCAN_INTERVAL).to_i,
-  scan_ports: ENV.fetch('SCAN_PORTS', DEFAULT_PORT_RANGE),
   smtp_host: ENV.fetch('SMTP_HOST') { raise 'EMAIL_SMTP_HOST environment variable missing' },
   smtp_port: Integer(ENV.fetch('SMTP_PORT') { raise 'EMAIL_SMTP_PORT environment variable missing' }),
   smtp_username: ENV.fetch('SMTP_USERNAME') { raise 'EMAIL_USERNAME environment variable missing' },
@@ -31,7 +31,7 @@ class NmapScanner
     @settings = settings
 
     log(:debug, "[Settings] scan_interval=#{settings.scan_interval}")
-    log(:debug, "[Settings] scan_ports=#{settings.scan_ports}")
+    log(:debug, "[Settings] nmap_options=#{settings.nmap_options}")
     log(:debug, "[Settings] smtp_host=#{settings.smtp_host}")
     log(:debug, "[Settings] smtp_port=#{settings.smtp_port}")
     log(:debug, "[Settings] smtp_username=#{settings.smtp_username}")
@@ -77,7 +77,7 @@ class NmapScanner
   end
 
   private def find_open_ports
-    nmap_command = "nmap -p #{settings.scan_ports} #{settings.server_address}"
+    nmap_command = "nmap #{settings.nmap_options} #{settings.server_address}"
     log(:debug, "Running nmap: #{nmap_command}")
     scan_result = `#{nmap_command}`.split("\n")
 

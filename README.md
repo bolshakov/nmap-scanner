@@ -24,7 +24,7 @@ services:
     command: myserver.example.com 22/tcp,80/tcp
     environment:
       - SCAN_INTERVAL=3600 # in seconds (default 3600)
-      - SCAN_PORTS=1-100 # or just single oport, e.g 22 (default 1-65535)
+      - NMAP_OPTIONS=-p 1-1000 # default -F
       - SMTP_USERNAME=nmap-scanner
       - SMTP_PASSWORD=secret123
       - SMTP_HOST=smtp.example.com
