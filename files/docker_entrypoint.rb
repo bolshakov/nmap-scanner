@@ -82,7 +82,7 @@ class NmapScanner
     scan_result = `#{nmap_command}`.split("\n")
 
     scan_result
-      .select { |string| string.match?(/\d+\/tcp|udp/) }
+      .select { |string| string.match?(/\d+\/(tcp|udp)\s+open/) }
       .map { |line| line.split(/\s+/).first }
   end
 
